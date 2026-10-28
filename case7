@@ -1,0 +1,97 @@
+
+Start.
+Input the scholarship quota and number of candidates.
+For each candidate, input name, academic marks, attendance percentage, and annual family income.
+Check eligibility:
+Academic marks must be at least 75%.
+Attendance must be at least 80%.
+Annual family income must not exceed ₹2,00,000.
+Store eligible candidates in a list.
+Rank candidates by marks in descending order.
+If marks are equal, rank the candidate with higher attendance first.
+Select candidates according to the scholarship quota.
+Display the selected candidates and their ranks.
+Stop.
+Start
+Input quota and candidate details
+Check marks, attendance, and income
+Store eligible candidates
+Sort by marks, then attendance
+Select candidates up to quota
+Display scholarship ranking
+Stop
+candidates = []
+quota = int(input("Enter scholarship quota: "))
+n = int(input("Enter number of candidates: "))
+
+if quota < 0 or n <= 0:
+    print("Invalid input")
+else:
+    for i in range(n):
+        print("\nCandidate", i + 1)
+        name = input("Enter name: ")
+        marks = float(input("Enter academic marks (%): "))
+        attendance = float(input("Enter attendance (%): "))
+        income = float(input("Enter annual family income: "))
+
+        if (marks < 0 or marks > 100
+                or attendance < 0 or attendance > 100
+                or income < 0):
+            print("Invalid candidate details")
+        elif (marks >= 75 and attendance >= 80
+              and income <= 200000):
+            candidates.append((name, marks, attendance, income))
+
+    # Sort by marks, then attendance
+    for i in range(len(candidates)):
+        for j in range(i + 1, len(candidates)):
+            if (candidates[j][1] > candidates[i][1]
+                or (candidates[j][1] == candidates[i][1]
+                    and candidates[j][2] > candidates[i][2])):
+                candidates[i], candidates[j] = candidates[j], candidates[i]
+
+    print("\n--- SCHOLARSHIP SELECTION ---")
+
+    selected = min(quota, len(candidates))
+
+    if selected == 0:
+        print("No candidates selected")
+    else:
+        for i in range(selected):
+            print("Rank:", i + 1)
+            print("Name:", candidates[i][0])
+            print("Marks:", candidates[i][1])
+            print("Attendance:", candidates[i][2])
+            print()
+           Enter scholarship quota: 2
+Enter number of candidates: 3
+
+Candidate 1
+Enter name: Ravi
+Enter academic marks (%): 85
+Enter attendance (%): 90
+Enter annual family income: 150000
+
+Candidate 2
+Enter name: Priya
+Enter academic marks (%): 92
+Enter attendance (%): 88
+Enter annual family income: 180000
+
+Candidate 3
+Enter name: Arun
+Enter academic marks (%): 70
+Enter attendance (%): 95
+Enter annual family income: 100000
+
+--- SCHOLARSHIP SELECTION ---
+Rank: 1
+Name: Priya
+Marks: 92.0
+Attendance: 88.0
+
+Rank: 2
+Name: Ravi
+Marks: 85.0
+Attendance: 90.0
+ 

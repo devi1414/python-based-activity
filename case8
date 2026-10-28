@@ -1,0 +1,130 @@
+
+Start.
+Input the number of students and subjects.
+Input each student's name and original marks for every subject.
+Input the moderation bonus marks.
+Add the bonus to each subject's original marks.
+Ensure moderated marks do not exceed 100.
+Calculate original and moderated total marks.
+Compare the results and classify each student as Pass or Fail using a pass mark of 40 per subject.
+Display original marks, moderated marks, totals, and results.
+Stop.
+Input original marks for each subject
+Add bonus and cap marks at 100
+Calculate original and moderated totals
+Check pass mark for every subject
+Display results and comparison stop
+names = []
+original = []
+moderated = []
+
+n = int(input("Enter number of students: "))
+subjects = int(input("Enter number of subjects: "))
+bonus = float(input("Enter moderation bonus marks: "))
+
+if n <= 0 or subjects <= 0 or bonus < 0:
+    print("Invalid input")
+
+else:
+    valid = True
+
+    for i in range(n):
+        name = input("\nEnter student name: ")
+        names.append(name)
+
+        row = []
+
+        for j in range(subjects):
+            mark = float(input("Enter original marks: "))
+
+            if mark < 0 or mark > 100:
+                valid = False
+                break
+
+            row.append(mark)
+
+        if len(row) != subjects:
+            valid = False
+            break
+
+        original.append(row)
+
+    if not valid:
+        print("Invalid marks. Run the program again.")
+
+    else:
+        for i in range(n):
+            row = []
+
+            for j in range(subjects):
+                new_mark = original[i][j] + bonus
+
+                if new_mark > 100:
+                    new_mark = 100
+
+                row.append(new_mark)
+
+            moderated.append(row)
+
+        print("\n--- EXAMINATION RESULTS ---")
+
+        for i in range(n):
+            old_total = sum(original[i])
+            new_total = sum(moderated[i])
+
+            old_pass = True
+            new_pass = True
+
+            for j in range(subjects):
+                if original[i][j] < 40:
+                    old_pass = False
+
+                if moderated[i][j] < 40:
+                    new_pass = False
+
+            print("\nStudent:", names[i])
+            print("Original Marks:", original[i])
+            print("Moderated Marks:", moderated[i])
+            print("Original Total:", old_total)
+            print("Moderated Total:", new_total)
+
+            if old_pass:
+                print("Original Result: PASS")
+            else:
+                print("Original Result: FAIL")
+
+            if new_pass:
+                print("Moderated Result: PASS")
+            else:
+                print("Moderated Result: FAIL")
+                Enter number of students: 2
+Enter number of subjects: 3
+Enter moderation bonus marks: 5
+
+Enter student name: Ravi
+Enter original marks: 35
+Enter original marks: 60
+Enter original marks: 75
+
+Enter student name: Priya
+Enter original marks: 80
+Enter original marks: 90
+Enter original marks: 95
+
+--- EXAMINATION RESULTS ---
+
+Student: Ravi
+Original Marks: [35.0, 60.0, 75.0]
+Moderated Marks: [40.0, 65.0, 80.0]
+Original Total: 170.0
+Moderated Total: 185.0
+Original Result: FAIL
+Moderated Result: PASS
+
+Student: Priya
+Original Marks: [80.0, 90.0, 95.0]
+Moderated Marks: [85.0, 95.0, 100]
+Original Total: 265.0
+Moderated Total: 280.0
+Original Result: PASS
+Moderated Result: PASS

@@ -1,0 +1,129 @@
+
+Start.
+Input the number of buildings.
+For each building, input its name, previous electricity consumption, current electricity consumption, previous water consumption, and current water consumption.
+Calculate electricity cost and water cost.
+Calculate percentage changes in electricity and water consumption.
+Check whether consumption exceeds the specified limits.
+Calculate each building's total resource cost.
+Rank buildings by total cost in descending order.
+Display costs, percentage changes, excessive consumption warnings, and rankings.
+Stop.
+Input building consumption data
+Calculate costs and percentage changes
+Check consumption limits
+Calculate total cost and rank buildings
+Display audit report
+Stop
+buildings = []
+
+n = int(input("Enter number of buildings: "))
+
+if n <= 0:
+    print("Invalid number of buildings")
+
+else:
+    valid = True
+
+    for i in range(n):
+        print("\nBuilding", i + 1)
+        name = input("Enter building name: ")
+
+        old_e = float(input("Previous electricity units: "))
+        new_e = float(input("Current electricity units: "))
+        old_w = float(input("Previous water units: "))
+        new_w = float(input("Current water units: "))
+
+        if min(old_e, new_e, old_w, new_w) < 0:
+            print("Invalid consumption")
+            valid = False
+            break
+
+        electricity_cost = new_e * 8
+        water_cost = new_w * 20
+        total_cost = electricity_cost + water_cost
+
+        if old_e == 0:
+            e_change = 0 if new_e == 0 else None
+        else:
+            e_change = (new_e - old_e) / old_e * 100
+
+        if old_w == 0:
+            w_change = 0 if new_w == 0 else None
+        else:
+            w_change = (new_w - old_w) / old_w * 100
+
+        excessive = new_e > 500 or new_w > 100
+
+        buildings.append([
+            name, electricity_cost, water_cost, total_cost,
+            e_change, w_change, excessive
+        ])
+
+    if valid:
+        # Sort by total cost, highest first
+        for i in range(len(buildings)):
+            for j in range(i + 1, len(buildings)):
+                if buildings[j][3] > buildings[i][3]:
+                    buildings[i], buildings[j] = (
+                        buildings[j], buildings[i]
+                    )
+
+        print("\n--- CAMPUS ENERGY AUDIT ---")
+
+        for i, b in enumerate(buildings):
+            print("\nRank:", i + 1)
+            print("Building:", b[0])
+            print("Electricity Cost: Rs.", b[1])
+            print("Water Cost: Rs.", b[2])
+            print("Total Cost: Rs.", b[3])
+
+            if b[4] is None:
+                print("Electricity Change: Not calculable (previous = 0)")
+            else:
+                print("Electricity Change:", round(b[4], 2), "%")
+
+            if b[5] is None:
+                print("Water Change: Not calculable (previous = 0)")
+            else:
+                print("Water Change:", round(b[5], 2), "%")
+
+            if b[6]:
+                print("Warning: Excessive consumption")
+            else:
+                print("Consumption: Within limits")
+    Enter number of buildings: 2
+
+Building 1
+Enter building name: Block A
+Previous electricity units: 400
+Current electricity units: 450
+Previous water units: 80
+Current water units: 90
+
+Building 2
+Enter building name: Block B
+Previous electricity units: 400
+Current electricity units: 600
+Previous water units: 80
+Current water units: 120
+
+--- CAMPUS ENERGY AUDIT ---
+
+Rank: 1
+Building: Block B
+Electricity Cost: Rs. 4800.0
+Water Cost: Rs. 2400.0
+Total Cost: Rs. 7200.0
+Electricity Change: 50.0 %
+Water Change: 50.0 %
+Warning: Excessive consumption
+
+Rank: 2
+Building: Block A
+Electricity Cost: Rs. 3600.0
+Water Cost: Rs. 1800.0
+Total Cost: Rs. 5400.0
+Electricity Change: 12.5 %
+Water Change: 12.5 %
+Consumption: Within limits            

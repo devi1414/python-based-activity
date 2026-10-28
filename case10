@@ -1,0 +1,88 @@
+
+Start.
+Input the number of registration records.
+Input each record in ID|NAME|BRANCH format.
+Split each record using the | separator.
+Check that exactly three fields exist.
+Validate the ID, name, and branch formats.
+Check whether the ID has appeared in an earlier record.
+Classify each record as valid or invalid and record all detected errors.
+Display the extracted fields and error reasons.
+Stop.
+Start
+Input registration record
+Split record into fields
+Validate field count, ID, name, and branch
+Check for duplicate ID
+Classify record and display errors
+Stop
+records = []
+seen_ids = []
+
+n = int(input("Enter number of records: "))
+
+if n <= 0:
+    print("Invalid number of records")
+
+else:
+    for i in range(n):
+        record = input("Enter ID|NAME|BRANCH: ")
+        fields = record.split("|")
+        errors = []
+
+        if len(fields) != 3:
+            errors.append("Incorrect number of fields")
+
+        else:
+            sid = fields[0].strip()
+            name = fields[1].strip()
+            branch = fields[2].strip()
+
+            if len(sid) != 6 or not sid.isdigit():
+                errors.append("Invalid ID")
+
+            if (name == "" or
+                not all(ch.isalpha() or ch == " "
+                        for ch in name)):
+                errors.append("Invalid name")
+
+            if (len(branch) != 3 or
+                not branch.isalpha() or
+                branch != branch.upper()):
+                errors.append("Invalid branch")
+
+            if sid in seen_ids:
+                errors.append("Duplicate ID")
+
+            seen_ids.append(sid)
+
+        records.append((record, errors))
+
+    print("\n--- REGISTRATION REPORT ---")
+
+    for record, errors in records:
+        print("\nRecord:", record)
+
+        if len(errors) == 0:
+            print("Status: Valid")
+        else:
+            print("Status: Invalid")
+            for error in errors:
+                print("-", error)
+                Enter number of records: 3
+Enter ID|NAME|BRANCH: 123456|Ravi Kumar|CSE
+Enter ID|NAME|BRANCH: 1234A6|Priya|CSE
+Enter ID|NAME|BRANCH: 123456|Ravi|CSE
+
+--- REGISTRATION REPORT ---
+
+Record: 123456|Ravi Kumar|CSE
+Status: Valid
+
+Record: 1234A6|Priya|CSE
+Status: Invalid
+- Invalid ID
+
+Record: 123456|Ravi|CSE
+Status: Invalid
+- Duplicate ID

@@ -1,0 +1,50 @@
+
+Start.
+Input total classes conducted and classes attended.
+Input the required attendance percentage.
+Calculate the current attendance percentage.
+If attendance is already sufficient, display eligible.
+Otherwise, calculate the minimum consecutive classes the student must attend to reach the required percentage.
+Display the current percentage and required classes.
+Stop.
+Start
+Input total classes, attended classes, and threshold
+Calculate attendance percentage
+Attendance meets threshold?
+Yes
+Display Eligible
+No
+Calculate required classes
+Display result
+Stop
+total = int(input("Enter total classes conducted: "))
+attended = int(input("Enter classes attended: "))
+threshold = float(input("Enter required attendance percentage: "))
+
+if (total <= 0 or attended < 0 or attended > total
+        or threshold <= 0 or threshold >= 100):
+    print("Invalid input")
+else:
+    percentage = attended / total * 100
+
+    print("Current Attendance:", round(percentage, 2), "%")
+
+    if percentage >= threshold:
+        print("Status: Eligible")
+        print("Additional classes required: 0")
+    else:
+        required = 0
+
+        while ((attended + required) / (total + required) * 100
+               < threshold):
+            required = required + 1
+
+        print("Status: Not Eligible")
+        print("Minimum consecutive classes to attend:", required)
+        Enter total classes conducted: 80
+Enter classes attended: 55
+Enter required attendance percentage: 75
+
+Current Attendance: 68.75 %
+Status: Not Eligible
+Minimum consecutive classes to attend: 20

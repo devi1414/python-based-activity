@@ -1,0 +1,90 @@
+
+Algorithm
+1. Start.
+2. Input the student's name, aggregate marks, minimum subject marks, attendance percentage, and annual family income.
+3. Check whether all eligibility conditions are satisfied:
+   - Aggregate marks ≥ 75%
+   - Minimum subject marks ≥ 60%
+   - Attendance ≥ 75%
+   - Annual family income ≤ ₹2,50,000
+4. If all conditions are satisfied, declare the student eligible; otherwise, declare the student not eligible.
+5. Display the result.
+6. Stop.
+2. Flowchart
+Start
+Input marks, attendance, income and subject score
+Aggregate ≥ 75%, subject ≥ 60%, attendance ≥ 75%, income ≤ ₹2,50,000?
+YES
+Eligible
+
+NO
+Not eligible
+
+
+
+# University Scholarship Allocation
+
+applicants = [
+    {
+        "name": "Ravi",
+        "aggregate": 88,
+        "subjects": [85, 90, 88],
+        "attendance": 92,
+        "income": 180000
+    },
+    {
+        "name": "Sita",
+        "aggregate": 88,
+        "subjects": [80, 85, 90],
+        "attendance": 95,
+        "income": 150000
+    },
+    {
+        "name": "Arun",
+        "aggregate": 70,
+        "subjects": [65, 72, 68],
+        "attendance": 80,
+        "income": 200000
+    }
+]
+
+eligible = []
+
+for student in applicants:
+    if (student["aggregate"] >= 75
+            and min(student["subjects"]) >= 60
+            and student["attendance"] >= 75
+            and student["income"] <= 250000):
+
+        eligible.append(student)
+        print(student["name"], "- Eligible")
+    else:
+        print(student["name"], "- Not Eligible")
+
+# Ranking: aggregate marks, attendance,
+# then lower family income
+eligible.sort(
+    key=lambda s: (
+        -s["aggregate"],
+        -s["attendance"],
+        s["income"]
+    )
+)
+
+print("\nScholarship Ranking")
+
+for rank, student in enumerate(eligible, start=1):
+    print(
+        rank, student["name"],
+        "Marks:", student["aggregate"],
+        "Attendance:", student["attendance"]
+    )
+
+4. Sample output
+Enter student name: Ravi
+Enter aggregate marks (%): 85
+Enter minimum subject marks (%): 70
+Enter attendance (%): 90
+Enter annual family income: 200000
+Student Name: Ravi
+Scholarship Status: Eligible

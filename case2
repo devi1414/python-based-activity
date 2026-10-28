@@ -1,0 +1,80 @@
+
+Start.
+Input venue, equipment, catering per participant, transport, certificate cost per participant, sponsorship, and registration fee.
+Input the expected number of participants.
+Calculate the fixed cost.
+Calculate the variable cost per participant.
+Calculate the total event cost.
+Calculate the total registration income and total available funds.
+Calculate the sponsorship shortfall or surplus.
+Use a loop to find the minimum registrations required to break even.
+Display all financial details.
+Stop.
+Start
+Input event expenses and participants
+Calculate fixed and variable costs
+Calculate total cost and available funds
+Find minimum registrations using a loop
+Display cost, income, and shortfall
+Stop
+venue = float(input("Enter venue cost: "))
+equipment = float(input("Enter equipment cost: "))
+transport = float(input("Enter transport cost: "))
+catering = float(input("Enter catering cost per participant: "))
+certificate = float(input("Enter certificate cost per participant: "))
+participants = int(input("Enter number of participants: "))
+sponsorship = float(input("Enter sponsorship amount: "))
+fee = float(input("Enter registration fee per participant: "))
+
+if (venue < 0 or equipment < 0 or transport < 0
+        or catering < 0 or certificate < 0
+        or participants < 0 or sponsorship < 0 or fee < 0):
+    print("Invalid input")
+else:
+    fixed_cost = venue + equipment + transport
+    variable_cost = catering + certificate
+
+    total_cost = fixed_cost + participants * variable_cost
+    registration_income = participants * fee
+    available_funds = registration_income + sponsorship
+    balance = available_funds - total_cost
+
+    print("\n--- CAMPUS EVENT REPORT ---")
+    print("Fixed Cost: Rs.", fixed_cost)
+    print("Total Event Cost: Rs.", total_cost)
+    print("Registration Income: Rs.", registration_income)
+    print("Sponsorship: Rs.", sponsorship)
+    print("Total Available Funds: Rs.", available_funds)
+
+    if balance >= 0:
+        print("Surplus: Rs.", round(balance, 2))
+    else:
+        print("Sponsorship Shortfall: Rs.", round(-balance, 2))
+
+    if fee <= variable_cost:
+        print("Break-even is not possible with this registration fee.")
+    else:
+        registrations = 0
+
+        while (sponsorship + registrations * fee
+               < fixed_cost + registrations * variable_cost):
+            registrations = registrations + 1
+
+        print("Minimum Registrations Needed:", registrations)
+        Enter venue cost: 10000
+Enter equipment cost: 5000
+Enter transport cost: 3000
+Enter catering cost per participant: 200
+Enter certificate cost per participant: 50
+Enter number of participants: 100
+Enter sponsorship amount: 10000
+Enter registration fee per participant: 400
+
+--- CAMPUS EVENT REPORT ---
+Fixed Cost: Rs. 18000.0
+Total Event Cost: Rs. 43000.0
+Registration Income: Rs. 40000.0
+Sponsorship: Rs. 10000.0
+Total Available Funds: Rs. 50000.0
+Surplus: Rs. 7000.0
+Minimum Registrations Needed: 33

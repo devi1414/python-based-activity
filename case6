@@ -1,0 +1,97 @@
+
+Start.
+Input the number of transactions and the suspicious amount threshold.
+Store each transaction identifier and amount in separate lists.
+Use nested loops to identify duplicate transaction identifiers.
+Check whether each transaction amount exceeds the threshold.
+Add duplicate or high-value transactions to a suspicious list.
+Display all transactions and suspicious entries with their reasons.
+Stop.
+StartInput transaction IDs, amounts, and threshold
+Compare IDs using nested loops
+Check duplicate ID or amount above threshold
+Add suspicious transactions and reasons to list
+Display transaction summary
+Stop
+ids = []
+amounts = []
+
+n = int(input("Enter number of transactions: "))
+threshold = float(input("Enter suspicious amount threshold: "))
+
+if n <= 0 or threshold < 0:
+    print("Invalid input")
+else:
+    for i in range(n):
+        print("\nTransaction", i + 1)
+        tid = input("Enter transaction ID: ")
+        amount = float(input("Enter transaction amount: "))
+
+        ids.append(tid)
+        amounts.append(amount)
+
+    suspicious = []
+
+    for i in range(n):
+        duplicate = False
+
+        for j in range(n):
+            if i != j and ids[i] == ids[j]:
+                duplicate = True
+
+        reasons = []
+
+        if duplicate:
+            reasons.append("Duplicate ID")
+
+        if amounts[i] > threshold:
+            reasons.append("High amount")
+
+        if len(reasons) > 0:
+            suspicious.append((ids[i], amounts[i], reasons))
+
+    print("\n--- TRANSACTION SUMMARY ---")
+    print("Total Transactions:", n)
+    print("Suspicious Transactions:")
+
+    if len(suspicious) == 0:
+        print("No suspicious transactions found")
+    else:
+        for item in suspicious:
+            print("ID:", item[0])
+            print("Amount: Rs.", item[1])
+            print("Reason:", ", ".join(item[2]))
+            print()
+            Enter number of transactions: 4
+Enter suspicious amount threshold: 1000
+
+Transaction 1
+Enter transaction ID: T101
+Enter transaction amount: 500
+
+Transaction 2
+Enter transaction ID: T102
+Enter transaction amount: 1200
+
+Transaction 3
+Enter transaction ID: T101
+Enter transaction amount: 700
+
+Transaction 4
+Enter transaction ID: T104
+Enter transaction amount: 600
+
+--- TRANSACTION SUMMARY ---
+Total Transactions: 4
+Suspicious Transactions:
+ID: T101
+Amount: Rs. 500.0
+Reason: Duplicate ID
+
+ID: T102
+Amount: Rs. 1200.0
+Reason: High amount
+
+ID: T101
+Amount: Rs. 700.0
+Reason: Duplicate ID
